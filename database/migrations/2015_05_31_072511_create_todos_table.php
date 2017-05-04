@@ -14,8 +14,13 @@ class CreateTodosTable extends Migration
     {
         Schema::create('todos', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('todo_id');
             $table->string('name');
-            $table->unsignedInteger('user_id');
+            $table->string('context');
+            $table->string('file');
+            $table->date('date');
+            $table->double('rate', 15, 2)->default('0.0');
+            $table->unsignedInteger('list_id');
             $table->boolean('complete')->default(false);
             $table->timestamps();
         });

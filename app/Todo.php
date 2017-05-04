@@ -16,8 +16,12 @@ class Todo extends Model
      */
     protected $fillable = [
         'name',
-        'user_id',
-    ];
+        'context',
+        'file',
+        'date',
+        'rate',
+        'list_id'
+];
 
     /*
      * Eloquent attribute casting

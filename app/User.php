@@ -11,7 +11,13 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract
 {
     use Authenticatable, CanResetPassword;
-
+    /**
+     * Get the lists for the blog post.
+     */
+    public function lists()
+    {
+        return $this->hasMany('App\List');
+    }
     /**
      * The database table used by the model.
      *
