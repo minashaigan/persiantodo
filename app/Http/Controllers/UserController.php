@@ -77,7 +77,7 @@ class UserController extends Controller
         }
         $user->save();
 
-        return redirect('/todo')
+        return redirect('/list')
             ->with('flash_notification.message', 'Profile updated successfully')
             ->with('flash_notification.level', 'success');
     }

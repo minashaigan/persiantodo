@@ -15,7 +15,7 @@ class TodoController extends Controller
      */
     public function index()
     {
-        $todoList = Todo::where('user_id', Auth::id())->paginate(7);
+        $todoList = Todo::where('list_id', Auth::id())->paginate(7);
 
         return view('todo.list', compact('todoList'));
     }
@@ -69,7 +69,7 @@ class TodoController extends Controller
             ->with('flash_notification.message', 'Todo updated successfully')
             ->with('flash_notification.level', 'success');
     }
-
+    
     /**
      * Delete Todo.
      *

@@ -11,7 +11,7 @@
         <div class="form-group">
             <div class="col-sm-offset-3 col-sm-5">
                 {!! Form::submit('Update', ['class' => 'btn btn-primary']) !!}
-                <a href="{{ url('/todo') }}" class="btn btn-default">Cancel</a>
+                <a href="{{ url('/list') }}" class="btn btn-default">Cancel</a>
             </div>
         </div>
     {!! Form::close() !!}
