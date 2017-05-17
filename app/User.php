@@ -16,7 +16,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function lists()
     {
-        return $this->hasMany('App\List','user_id');
+        return $this->hasMany('App\Listt','user_id');
     }
     /**
      * The database table used by the model.

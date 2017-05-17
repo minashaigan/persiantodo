@@ -1,7 +1,8 @@
 @extends('layouts.master')
 
 @section('content')
-    <h1>Create New Todo</h1>
+    <h1>Create New List</h1>
+
     <hr/>
 
     {!! Form::open(['url' => '/list', 'class' => 'form-horizontal', 'role' => 'form']) !!}

@@ -17,8 +17,8 @@ class ListController extends Controller
     public function index()
     {
         $Lists = Listt::where('user_id', Auth::id())->paginate(7);
-
-        return view('list.list', compact('Lists'));
+        return view('list.list',['Lists' => $Lists]);
+        //return view('list.list', compact('Lists'));
     }
 
     /**
@@ -78,15 +78,18 @@ class ListController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function show($id)
-    {
-        $todos = Todo::where('list_id', Auth::id())->paginate(7);
+    public function show($id){
 
-        return view('todo.list', compact('List'));
+        $todoList = Todo::where('list_id', $id)->get();
+
+        //return $lists[0]->user;
+        
+        return view('todo.list',['todoList' => $todoList]);
+        //return view('to do.list', compact('List'));
     }
 
     /**
-     * Delete Todo.
+     * Delete To do.
      *
      * @param $id
      *

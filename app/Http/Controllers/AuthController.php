@@ -41,7 +41,7 @@ class AuthController extends Controller
             'password' => $request->get('password'),
         ], $request->get('remember'))) {
             return redirect()
-                ->intended('/todo')
+                ->intended('/list')
                 ->with('flash_notification.message', 'Logged in successfully')
                 ->with('flash_notification.level', 'success');
         }

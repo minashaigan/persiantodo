@@ -6,12 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Listt extends Model
 {
+    /*
+     * Table name
+     */
+    protected $table = 'lists';
+
     /**
      * Get the todos for the blog post.
      */
     public function todos()
     {
-        return $this->hasMany('App\Todo');
+        return $this->hasMany('App\Todo','list_id');
     }
     /**
      * Get the post that owns the comment.
@@ -20,11 +25,6 @@ class Listt extends Model
     {
         return $this->belongsTo('App\User','user_id');
     }
-    /*
-     * Table name
-     */
-    protected $table = 'lists';
-
     /*
      * Fillable fields for protecting mass assignment vulnerability
      */

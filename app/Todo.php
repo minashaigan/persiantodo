@@ -16,7 +16,7 @@ class Todo extends Model
 
     public function listt()
     {
-        return $this->belongsTo('App\List','list_id');
+        return $this->belongsTo('App\Listt','list_id');
     }
     /*
      * Fillable fields for protecting mass assignment vulnerability

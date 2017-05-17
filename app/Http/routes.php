@@ -13,3 +13,10 @@ Route::resource('user', 'UserController', ['except' => ['index', 'show', 'destro
 
 // List Resources
 Route::resource('list', 'ListController', ['middleware' => 'auth']);
+
+//To do Resources
+
+Route::resource('todo', 'TodoController', ['middleware' => 'auth']);
+Route::get('todo/create/{id}', 'TodoController@create');
+Route::get('todo/list/{id}','TodoController@show');
+Route::get('todo/{id}','TodoController@index');

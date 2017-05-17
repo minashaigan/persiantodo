@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-    <h1>Todo List <a href="{{ url('/list/create') }}" class="btn btn-primary pull-right btn-sm">Add New Todo</a></h1>
+    <h1>List <a href="{{ url('/list/create') }}" class="btn btn-primary pull-right btn-sm">Add New List</a></h1>
     <hr/>
 
     @include('partials.flash_notification')
@@ -20,15 +20,13 @@
                 <tbody>
                 @foreach($Lists as $list)
                     <tr>
-                        <a href="{{ url('/list/show', $list->id) }}">
-                            <td>{{ $list->name }}</td>
-                            <td>
-                                {!! Form::open(['route' => ['list.destroy', $list->id], 'class' => 'form-inline', 'method' => 'delete']) !!}
-                                    {!! Form::hidden('id', $list->id) !!}
-                                    {!! Form::submit('Delete', ['class' => 'btn btn-danger btn-xs']) !!}
-                                {!! Form::close() !!}
-                            </td>
-                        </a>
+                        <td><a href="{{ url('todo/list',$list->id) }}">{{ $list->name }}</a></td>
+                        <td>
+                            {!! Form::open(['route' => ['list.destroy', $list->id], 'class' => 'form-inline', 'method' => 'delete']) !!}
+                                {!! Form::hidden('id', $list->id) !!}
+                                {!! Form::submit('Delete', ['class' => 'btn btn-danger btn-xs']) !!}
+                            {!! Form::close() !!}
+                        </td>
                     </tr>
                 @endforeach
                 </tbody>

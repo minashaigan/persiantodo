@@ -19,9 +19,16 @@ class CreateTodosTable extends Migration
             $table->string('file');
             $table->date('date');
             $table->double('rate', 15, 2)->default('0.0');
-            $table->unsignedInteger('list_id');
+            $table->integer('list_id')->unsigned()->index();
             $table->boolean('complete')->default(false);
             $table->timestamps();
+        });
+        Schema::table('todos', function($table) {
+            $table->foreign('list_id')
+                ->references('id')
+                ->on('lists')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
         });
     }
 
