@@ -23,6 +23,9 @@ Route::get('todo/create/{id}', 'TodoController@create');
 Route::get('todo/list/{id}','TodoController@show');
 Route::get('todo/info/{id}','TodoController@info');
 Route::get('todo/edit/{id}','TodoController@edit');
-Route::get('todo/submit_edit/{id}','TodoController@submit_edit');
+Route::get('todo/submit_edit/{id}', [
+    'as' => 'edit',
+    'uses' => 'TodoController@submit_edit'
+]);
 Route::get('todo/filter/{id}/{list_id}','TodoController@filter');
 Route::get('todo/{id}','TodoController@index');

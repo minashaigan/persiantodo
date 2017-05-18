@@ -3,8 +3,8 @@
 @section('content')
 
     @include('partials.flash_notification')
-
-    {!! Form::open(['url'=>'/todo/submit_edit',$todo_id , 'class' => 'form-horizontal', 'role' => 'form']) !!}
+    {{--'url'=>'/todo/submit_edit',$todo_id ,--}}
+    {!! Form::open([ 'class' => 'form-horizontal', 'role' => 'form', 'method' => 'GET','route' => ['edit', $todo_id] ]) !!}
     <!-- Name Field -->
     <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
         {!! Form::label('name', 'Todo Name', ['class' => 'col-sm-3 control-label']) !!}

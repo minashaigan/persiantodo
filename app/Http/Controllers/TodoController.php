@@ -131,10 +131,10 @@ class TodoController extends Controller
     /**
      *
      */
-    public function submit_edit($id,Request $request)
+    public function submit_edit(Request $request,$id)
     {
         $todo = Todo::findOrFail($id);
-        $input = Input::all();
+//        $input = Input::all();
         if( $request->get('name')){
             $todo->name =  $request->get('name');
         }
