@@ -6,6 +6,7 @@ use App\Listt;
 use App\Todo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
 
 class ListController extends Controller
 {
@@ -16,7 +17,7 @@ class ListController extends Controller
      */
     public function index()
     {
-        $Lists = Listt::where('user_id', Auth::id())->paginate(7);
+        $Lists = Listt::where('user_id', Auth::id())->orderBy('created_at','desc')->paginate(7);
         return view('list.list',['Lists' => $Lists]);
         //return view('list.list', compact('Lists'));
     }
@@ -80,7 +81,7 @@ class ListController extends Controller
      */
     public function show($id){
 
-        $todoList = Todo::where('list_id', $id)->get();
+        $todoList = Todo::where('list_id', $id)->orderBy('created_at','desc')->get();
 
         //return $lists[0]->user;
         
@@ -104,5 +105,24 @@ class ListController extends Controller
             ->route('list.index')
             ->with('flash_notification.message', 'Todo deleted successfully')
             ->with('flash_notification.level', 'success');
+    }
+    public function edit($id)
+    {
+        $list = Listt::findOrFail($id);
+        return view('list.edit',['list_id' => $id,'list'=>$list]);
+    }
+    /**
+     *
+     */
+    public function edited($id)
+    {
+        $list = Listt::findOrFail($id);
+        $input = Input::all();
+        if($input['Name']){
+            $list->name = $input['Name'];
+        }
+
+        $list->save();
+        return view('list.info',['list_id' => $id,'list'=>$list]);
     }
 }

@@ -14,9 +14,46 @@
                     {{ $errors -> first('name') }}
                 </span>
             </div>
-            <input type="hidden" name="list_id" value="{{$list_id}}">
-        </div>
 
+        </div>
+        <!-- Context Field -->
+        <div class="form-group">
+            {!! Form::label('context', 'Todo Context', ['class' => 'col-sm-3 control-label']) !!}
+            <div class="col-sm-6">
+                {!! Form::text('context', null, ['class' => 'form-control']) !!}
+            </div>
+
+        </div>
+        <!-- Date Field -->
+        <div class="form-group">
+            {!! Form::label('end_date', 'Todo End date', ['class' => 'col-sm-3 control-label']) !!}
+            <div class="col-sm-6">
+                {!! Form::date('end_date', null, ['class' => 'form-control']) !!}
+            </div>
+        </div>
+        <!-- Deadline Field -->
+        <div class="form-group">
+            {!! Form::label('deadline', 'Todo Deadline', ['class' => 'col-sm-3 control-label']) !!}
+            <div class="col-sm-6">
+                {!! Form::date('deadline', null, ['class' => 'form-control']) !!}
+            </div>
+        </div>
+        <!-- rate Field -->
+        <div class="form-group">
+            {!! Form::label('rate', 'Todo Rate', ['class' => 'col-sm-3 control-label']) !!}
+            <div class="col-sm-6">
+                {!! Form::number('rate', null, ['class' => 'form-control']) !!}
+            </div>
+        </div>
+        <!-- File Field -->
+        <div class="form-group">
+            {!! Form::label('file', 'Todo File', ['class' => 'col-sm-3 control-label']) !!}
+            <div class="col-sm-6">
+                {!! Form::file('file', null, ['class' => 'form-control']) !!}
+            </div>
+
+        </div>
+        <input type="hidden" name="list_id" value="{{$list_id}}">
         <!-- Submit Button -->
         <div class="form-group">
             <div class="col-sm-offset-3 col-sm-5">

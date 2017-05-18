@@ -15,9 +15,10 @@ class CreateTodosTable extends Migration
         Schema::create('todos', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('context');
-            $table->string('file');
-            $table->date('date');
+            $table->string('context')->nullable();
+            $table->string('file')->nullable();
+            $table->date('date')->nullable();
+            $table->date('deadline')->nullable();
             $table->double('rate', 15, 2)->default('0.0');
             $table->integer('list_id')->unsigned()->index();
             $table->boolean('complete')->default(false);

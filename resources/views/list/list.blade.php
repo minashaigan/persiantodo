@@ -26,6 +26,8 @@
                                 {!! Form::hidden('id', $list->id) !!}
                                 {!! Form::submit('Delete', ['class' => 'btn btn-danger btn-xs']) !!}
                             {!! Form::close() !!}
+
+                            <a href="{{ url('list/edit',$list->id) }}" class="btn btn-warning btn-xs">Edit</a>
                         </td>
                     </tr>
                 @endforeach
