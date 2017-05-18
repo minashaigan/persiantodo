@@ -19,7 +19,6 @@
         </span>
     </div>
 </div>
-
 <!-- Password Field -->
 <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
     {!! Form::label('password', 'Password', ['class' => 'col-sm-3 control-label']) !!}
@@ -40,4 +39,15 @@
             {{ $errors -> first('password_confirmation') }}
         </span>
     </div>
+</div>
+<!-- Reminder Field -->
+<div class="form-group">
+    <div class="col-sm-3">
+    </div>
+    <div class="col-sm-6">
+        {!! Form::checkbox('reminder', null, ['class' => 'form-control']) !!}
+        {!! Form::label('reminder', 'Remind me the closed deadline todos' ) !!}
+    </div>
+
+
 </div>

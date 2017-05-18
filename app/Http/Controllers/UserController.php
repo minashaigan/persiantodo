@@ -33,10 +33,17 @@ class UserController extends Controller
      */
     public function store(UserRequest $request)
     {
+        if($request->get('reminder')==''){
+            $reminder = 0;
+        }
+        else{
+            $reminder = 1;
+        }
         User::create([
             'name'      => $request->get('name'),
             'email'     => $request->get('email'),
-            'password'  => bcrypt($request->get('password'))
+            'password'  => bcrypt($request->get('password')),
+            'reminder'  => boolval($reminder),
         ]);
 
         return redirect('login')

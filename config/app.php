@@ -137,6 +137,8 @@ return [
         'Illuminate\Validation\ValidationServiceProvider',
         'Illuminate\View\ViewServiceProvider',
 
+        Illuminate\Notifications\NotificationServiceProvider::class,
+
         /*
          * Application Service Providers...
          */

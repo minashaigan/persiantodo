@@ -1,5 +1,7 @@
 <?php
 
+
+
 // Home Page
 Route::get('/home', 'AuthController@home');
 Route::get('/', 'AuthController@home');
@@ -29,3 +31,4 @@ Route::get('todo/submit_edit/{id}', [
 ]);
 Route::get('todo/filter/{id}/{list_id}','TodoController@filter');
 Route::get('todo/{id}','TodoController@index');
+Route::get('todo/notify/{id}','TodoController@notify');

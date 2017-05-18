@@ -8,7 +8,7 @@
     {!! Form::open(['url' => '/list', 'class' => 'form-horizontal', 'role' => 'form']) !!}
         <!-- Name Field -->
         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-            {!! Form::label('name', 'Todo Name', ['class' => 'col-sm-3 control-label']) !!}
+            {!! Form::label('name', 'List Name', ['class' => 'col-sm-3 control-label']) !!}
             <div class="col-sm-6">
                 {!! Form::text('name', null, ['class' => 'form-control']) !!}
                 <span class="help-block text-danger">

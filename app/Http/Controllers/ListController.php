@@ -18,7 +18,9 @@ class ListController extends Controller
     public function index()
     {
         $Lists = Listt::where('user_id', Auth::id())->orderBy('created_at','desc')->paginate(7);
+        //return response()->json($Lists);
         return view('list.list',['Lists' => $Lists]);
+
         //return view('list.list', compact('Lists'));
     }
 
@@ -82,7 +84,7 @@ class ListController extends Controller
     public function show($id){
 
         $todoList = Todo::where('list_id', $id)->orderBy('created_at','desc')->get();
-
+        
         //return $lists[0]->user;
         
         return view('todo.list',['todoList' => $todoList]);

@@ -2,14 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Listt;
 use App\Todo;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;
 
+use Illuminate\Notifications\Notifiable;
+use App\Notifications\UnDoneToDo;
+
 class TodoController extends Controller
 {
+    use Notifiable;
     /**
      * View ToDos listing.
      *
@@ -19,14 +25,16 @@ class TodoController extends Controller
     {
         $todoList = Todo::where('list_id', $id)->orderBy('created_at','desc')->paginate(7);
 
+        //return response()->json(['todoList'=>$todoList]);
         return view('todo.list',['todoList' => $todoList] );
     }
 
     public function show($id){
 
         $todoList = Todo::where('list_id', $id)->orderBy('created_at','desc')->get();
+        //return response()->json([['todoList'=>$todoList],['list_id'=>$id]]);
 
-        //return $lists[0]->user;
+        ////return $lists[0]->user;
 
         return view('todo.list',['todoList' => $todoList,'list_id'=>$id]);
         //return view('to do.list', compact('List'));
@@ -39,6 +47,7 @@ class TodoController extends Controller
      */
     public function create($id)
     {
+        //return response()->json(['list_id' => $id]);
         return view('todo.create',['list_id' => $id]);
     }
     /**
@@ -57,7 +66,7 @@ class TodoController extends Controller
         $this->validate($request, ['deadline' => '']);
         $this->validate($request, ['rate' => '']);
         $list_id = $request->input('list_id');
-        Todo::create([
+        $todo = Todo::create([
             'name' => $request->get('name'),
             'context' => $request->get('context'),
             'file' => $request->get('file'),
@@ -66,6 +75,8 @@ class TodoController extends Controller
             'rate' => $request->get('rate'),
             'list_id' => $request->input('list_id'),
         ]);
+        //return $list_id;
+        return response()->json([['list_id',$list_id],['flash_notification.message', 'New todo created successfully'],['flash_notification.level', 'success']]);
         return redirect('todo/'.$list_id)
             ->with('flash_notification.message', 'New todo created successfully')
             ->with('flash_notification.level', 'success');
@@ -174,4 +185,12 @@ class TodoController extends Controller
         return view('todo.list', ['todoList' => $todoList,'list_id'=>$listid]);
     }
 
+    public function notify($id)
+    {
+        $todo = Todo::findOrFail($id);
+        $list = Listt::findOrFail($todo->listt->id);
+        $user = User::findOrFail($list->user_id);
+
+        $user->notify(new UnDoneToDo($todo));
+    }
 }

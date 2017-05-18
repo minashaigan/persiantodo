@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use App\Notifications\UnDoneToDo;
 
 class Todo extends Model
 {
+    use Notifiable;
     /*
      * Table name
      */
