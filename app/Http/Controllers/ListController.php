@@ -17,9 +17,12 @@ class ListController extends Controller
      */
     public function index()
     {
-        $Lists = Listt::where('user_id', Auth::id())->orderBy('created_at','desc')->paginate(7);
-        //return response()->json($Lists);
-        return view('list.list',['Lists' => $Lists]);
+
+        $Lists = Listt::where('user_id', Auth::user()->id )->orderBy('created_at','desc')->get();
+        //$Lists = Listt::where('user_id', 1)->orderBy('created_at','desc')->get();
+
+        return response()->json(['Lists' => $Lists]);
+        //return view('list.list',['Lists' => $Lists]);
 
         //return view('list.list', compact('Lists'));
     }
@@ -35,7 +38,7 @@ class ListController extends Controller
     }
 
     /**
-     * Create new Todo.
+     * Create new To do.
      *
      * @param Request $request
      *
@@ -43,16 +46,21 @@ class ListController extends Controller
      */
     public function store(Request $request)
     {
+        if(!Auth::user()){
+            return redirect('/login');
+        }
+
         $this->validate($request, ['name' => 'required']);
 
         Listt::create([
-            'name' => $request->get('name'),
+            'name'      => $request->get('name'),
             'user_id' => Auth::user()->id,
         ]);
 
-        return redirect('/list')
-            ->with('flash_notification.message', 'New todo created successfully')
-            ->with('flash_notification.level', 'success');
+        return response()->json([['flash_notification.message'=> 'New todo created successfully'],['flash_notification.level'=>'success']]);
+        //return redirect('/list')
+          //->with('flash_notification.message', 'New to do created successfully')
+            //->with('flash_notification.level', 'success');
     }
 
     /**
@@ -65,13 +73,16 @@ class ListController extends Controller
     public function update($id)
     {
         $list = Listt::findOrFail($id);
-        $list->complete = !$list->complete;
+        $input = Input::all();
+        if($input['Name']){
+            $list->name = $input['Name'];
+        }
         $list->save();
-
-        return redirect()
-            ->route('list.index')
-            ->with('flash_notification.message', 'Todo updated successfully')
-            ->with('flash_notification.level', 'success');
+        return response()->json([['list_id'=>$id],['list'=>$list],['flash_notification.message'=>'Todo updated successfully'],['flash_notification.level'=>'success']]);
+        //return redirect()
+          //  ->route('list.index')
+            //->with('flash_notification.message', 'To do updated successfully')
+            //->with('flash_notification.level', 'success');
     }
 
     /**
@@ -81,14 +92,17 @@ class ListController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse
      */
+    
     public function show($id){
 
-        $todoList = Todo::where('list_id', $id)->orderBy('created_at','desc')->get();
-        
-        //return $lists[0]->user;
-        
-        return view('todo.list',['todoList' => $todoList]);
-        //return view('to do.list', compact('List'));
+        $List = Listt::findOrFail($id);
+        return response()->json(['List'=>$List]);
+//        $todoList = Todo::where('list_id', $id)->orderBy('created_at','desc')->get();
+//
+//        //return $lists[0]->user;
+//
+//        return view('todo.list',[['todoList' => $todoList],['list_id' => $id]]);
+//        //return view('to do.list', compact('List'));
     }
 
     /**
@@ -103,15 +117,22 @@ class ListController extends Controller
         $todo = Listt::findOrFail($id);
         $todo->delete();
 
-        return redirect()
-            ->route('list.index')
-            ->with('flash_notification.message', 'Todo deleted successfully')
-            ->with('flash_notification.level', 'success');
+        return response()->json([['flash_notification.message'=> 'Todo deleted successfully'],['flash_notification.level'=> 'success']]);
+//        return redirect()
+//            ->route('list.index')
+//            ->with('flash_notification.message', 'Todo deleted successfully')
+//            ->with('flash_notification.level', 'success');
     }
+
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function edit($id)
     {
         $list = Listt::findOrFail($id);
-        return view('list.edit',['list_id' => $id,'list'=>$list]);
+        return response()->json([['list_id' => $id],['list'=>$list]]);
+        //return view('list.edit',['list_id' => $id,'list'=>$list]);
     }
     /**
      *
@@ -123,8 +144,9 @@ class ListController extends Controller
         if($input['Name']){
             $list->name = $input['Name'];
         }
-
         $list->save();
-        return view('list.info',['list_id' => $id,'list'=>$list]);
+        
+        return response()->json([['list_id'=>$id],['list'=>$list]]);
+        //return view('list.info',['list_id' => $id,'list'=>$list]);
     }
 }

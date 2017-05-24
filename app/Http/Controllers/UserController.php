@@ -46,6 +46,7 @@ class UserController extends Controller
             'reminder'  => boolval($reminder),
         ]);
 
+        //return response()->json([['flash_notification.message', 'User registered successfully'],['flash_notification.level', 'success']]);
         return redirect('login')
             ->with('flash_notification.message', 'User registered successfully')
             ->with('flash_notification.level', 'success');
@@ -59,6 +60,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        //return response()->json(['user'=>$user]);
         return view('users.profile', compact('user'));
     }
 
@@ -84,6 +86,7 @@ class UserController extends Controller
         }
         $user->save();
 
+        //return response()->json([['flash_notification.message', 'Profile updated successfully'],['flash_notification.level', 'success']]);
         return redirect('/list')
             ->with('flash_notification.message', 'Profile updated successfully')
             ->with('flash_notification.level', 'success');

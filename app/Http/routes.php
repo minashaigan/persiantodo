@@ -21,8 +21,9 @@ Route::get('list/edited/{id}','ListController@edited');
 
 //To do Resources
 Route::resource('todo', 'TodoController', ['middleware' => 'auth']);
-Route::get('todo/create/{id}', 'TodoController@create');
+Route::get('todo/show/{id}','TodoController@index');
 Route::get('todo/list/{id}','TodoController@show');
+Route::get('todo/create/{id}','TodoController@create');
 Route::get('todo/info/{id}','TodoController@info');
 Route::get('todo/edit/{id}','TodoController@edit');
 Route::get('todo/submit_edit/{id}', [
@@ -30,5 +31,4 @@ Route::get('todo/submit_edit/{id}', [
     'uses' => 'TodoController@submit_edit'
 ]);
 Route::get('todo/filter/{id}/{list_id}','TodoController@filter');
-Route::get('todo/{id}','TodoController@index');
 Route::get('todo/notify/{id}','TodoController@notify');

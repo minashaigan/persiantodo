@@ -23,21 +23,24 @@ class TodoController extends Controller
      */
     public function index($id)
     {
-        $todoList = Todo::where('list_id', $id)->orderBy('created_at','desc')->paginate(7);
+        //$todoList = Todo::where('list_id', $id)->orderBy('created_at','desc')->paginate(7);
 
         //return response()->json(['todoList'=>$todoList]);
-        return view('todo.list',['todoList' => $todoList] );
+        $todoList = Todo::findOrFail($id);
+        return response()->json(['todoList' => $todoList]);
+
+        //return view('todo.list',['todoList' => $todoList] );
     }
 
     public function show($id){
 
         $todoList = Todo::where('list_id', $id)->orderBy('created_at','desc')->get();
-        //return response()->json([['todoList'=>$todoList],['list_id'=>$id]]);
+        return response()->json([['todoList'=>$todoList],['list_id'=>$id]]);
 
         ////return $lists[0]->user;
 
-        return view('todo.list',['todoList' => $todoList,'list_id'=>$id]);
-        //return view('to do.list', compact('List'));
+        //return view('todo.list',['todoList' => $todoList,'list_id'=>$id]);
+
     }
     
     /**
@@ -47,8 +50,8 @@ class TodoController extends Controller
      */
     public function create($id)
     {
-        //return response()->json(['list_id' => $id]);
-        return view('todo.create',['list_id' => $id]);
+        return response()->json(['list_id' => $id]);
+        //return view('todo.create',['list_id' => $id]);
     }
     /**
      * Create new To do.
@@ -66,7 +69,7 @@ class TodoController extends Controller
         $this->validate($request, ['deadline' => '']);
         $this->validate($request, ['rate' => '']);
         $list_id = $request->input('list_id');
-        $todo = Todo::create([
+        Todo::create([
             'name' => $request->get('name'),
             'context' => $request->get('context'),
             'file' => $request->get('file'),
@@ -75,11 +78,10 @@ class TodoController extends Controller
             'rate' => $request->get('rate'),
             'list_id' => $request->input('list_id'),
         ]);
-        //return $list_id;
-        return response()->json([['list_id',$list_id],['flash_notification.message', 'New todo created successfully'],['flash_notification.level', 'success']]);
-        return redirect('todo/'.$list_id)
-            ->with('flash_notification.message', 'New todo created successfully')
-            ->with('flash_notification.level', 'success');
+        return response()->json([['list_id'=>$list_id],['flash_notification.message'=> 'New todo created successfully'],['flash_notification.level'=>'success']]);
+//        return redirect('todo/'.$list_id)
+//           ->with('flash_notification.message', 'New todo created successfully')
+//            ->with('flash_notification.level', 'success');
     }
 
     /**
@@ -95,10 +97,10 @@ class TodoController extends Controller
         //$list_id = $todo->listt->id;
         $todo->complete = !$todo->complete;
         $todo->save();
-
-        return Redirect::back()
-            ->with('flash_notification.message', 'Todo updated successfully')
-            ->with('flash_notification.level', 'success');
+        return response()->json([['flash_notification.message'=>'Todo updated successfully'],['flash_notification.level'=> 'success']]);
+//        return Redirect::back()
+//            ->with('flash_notification.message', 'Todo updated successfully')
+//            ->with('flash_notification.level', 'success');
     }
     
     /**
@@ -113,11 +115,10 @@ class TodoController extends Controller
         $todo = Todo::findOrFail($id);
        // $list_id = $todo->listt->id;
         $todo->delete();
-
-        return
-            Redirect::back()
-            ->with('flash_notification.message', 'Todo deleted successfully')
-            ->with('flash_notification.level', 'success');
+        return response()->json([['flash_notification.message'=> 'Todo deleted successfully'],['flash_notification.level'=>'success']]);
+//        return Redirect::back()
+//            ->with('flash_notification.message', 'Todo deleted successfully')
+//            ->with('flash_notification.level', 'success');
     }
     /**
      * View Create Form.
@@ -127,7 +128,8 @@ class TodoController extends Controller
     public function info($id)
     {
         $todo = Todo::findOrFail($id);
-        return view('todo.info',['todo_id' => $id,'todo'=>$todo]);
+        return response()->json([['todo_id'=>$id],['todo'=>$todo]]);
+        //return view('todo.info',['todo_id' => $id,'todo'=>$todo]);
     }
     /**
      * View Create Form.
@@ -137,7 +139,8 @@ class TodoController extends Controller
     public function edit($id)
     {
         $todo = Todo::findOrFail($id);
-        return view('todo.edit',['todo_id' => $id,'todo'=>$todo]);
+        return response()->json([['todo_id' => $id],['todo'=>$todo]]);
+        //return view('todo.edit',['todo_id' => $id,'todo'=>$todo]);
     }
     /**
      *
@@ -165,7 +168,8 @@ class TodoController extends Controller
             $todo->rate = $request->get('rate');
         }
         $todo->save();
-        return view('todo.info',['todo_id' => $id,'todo'=>$todo]);
+        return response()->json([['todo_id'=>$id],['todo'=>$todo]]);
+        //return view('todo.info',['todo_id' => $id,'todo'=>$todo]);
     }
 
     /**
@@ -181,8 +185,8 @@ class TodoController extends Controller
         else{
             $todoList = Todo::where('rate',floatval($flag))->where('list_id',$listid)->orderBy('created_at','desc')->get();
         }
-        //return $todoList;
-        return view('todo.list', ['todoList' => $todoList,'list_id'=>$listid]);
+        return response()->json([['todoList' => $todoList],['list_id'=>$listid]]);
+        //return view('todo.list', ['todoList' => $todoList,'list_id'=>$listid]);
     }
 
     public function notify($id)
