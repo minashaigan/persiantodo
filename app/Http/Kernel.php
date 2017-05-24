@@ -1,9 +1,37 @@
 <?php namespace App\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
+use Illuminate\Notifications\Notifiable;
+use App\Notifications\UnDoneToDo;
 
 class Kernel extends HttpKernel
 {
+    use Notifiable;
+    /**
+     * Define the application's command schedule.
+     *
+     * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
+     * @return void
+     */
+    protected function schedule(Schedule $schedule)
+    {
+        $schedule->call(function () {
+            $users=User::all();
+            foreach ($users as $user){
+                foreach ($user->lists as $list){
+                    foreach ($list->todos as $todo) {
+                        if($user->reminder ==1) {
+                            $end = $todo->deadline;
+                            $today = date('Y-m-d H:i:s');
+                            if ($today > $end)
+                                $user->notify(new UnDoneToDo($todo, $user));
+                        }
+                    }
+                }
+            }
+        })->hourly();
+        #TODO ADD Alert Emails
+    }
     /**
      * The application's global HTTP middleware stack.
      *

@@ -138,6 +138,7 @@ return [
         'Illuminate\View\ViewServiceProvider',
 
         Illuminate\Notifications\NotificationServiceProvider::class,
+        NotificationChannels\Telegram\TelegramServiceProvider::class,
 
         /*
          * Application Service Providers...

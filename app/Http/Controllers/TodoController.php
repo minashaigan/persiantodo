@@ -190,7 +190,9 @@ class TodoController extends Controller
         $todo = Todo::findOrFail($id);
         $list = Listt::findOrFail($todo->listt->id);
         $user = User::findOrFail($list->user_id);
-
-        $user->notify(new UnDoneToDo($todo));
+        
+            $user->notify(new UnDoneToDo($todo,$user));
+        
+        
     }
 }
