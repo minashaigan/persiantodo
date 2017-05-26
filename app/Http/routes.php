@@ -6,6 +6,16 @@
 Route::get('/home', 'AuthController@home');
 Route::get('/', 'AuthController@home');
 
+//Route::get('/',function(){
+//   print_r(app()->make('redis'));
+//});
+
+//Route::get('/',function (){
+//    $redis = app()->make('redis');
+//    $redis->set("key1","testValue");
+//    return $redis->get("key1");
+//});
+
 // Login and Logout
 Route::get('/login', ['middleware' => 'guest', 'uses' => 'AuthController@getLogin']);
 Route::post('/login', ['middleware' => 'guest', 'uses' => 'AuthController@postLogin']);
@@ -22,7 +32,7 @@ Route::get('list/edited/{id}','ListController@edited');
 //To do Resources
 Route::resource('todo', 'TodoController', ['middleware' => 'auth']);
 Route::get('todo/show/{id}','TodoController@index');
-Route::get('todo/list/{id}','TodoController@show');
+Route::get('todo/list/{id}','TodoController@show')->where('id', '[0-9]+');
 Route::get('todo/create/{id}','TodoController@create');
 Route::get('todo/info/{id}','TodoController@info');
 Route::get('todo/edit/{id}','TodoController@edit');

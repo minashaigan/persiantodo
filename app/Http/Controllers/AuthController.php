@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redis;
 
 class AuthController extends Controller
 {
@@ -14,7 +15,16 @@ class AuthController extends Controller
      */
     public function home()
     {
-        return view('home');
+        $storage = Redis::Connection();
+        $popular = $storage->zRevRange('listViews', 0, 0);
+
+        foreach ($popular as $value){
+            $id = str_replace('list:', '', $value);
+            return app('App\Http\Controllers\ListController')->show($id);
+            //echo "list " . $id . "is popular" . "<br>";
+        }
+        //name of zIncrBy , index you want to start
+        //return view('home');
     }
 
     /**

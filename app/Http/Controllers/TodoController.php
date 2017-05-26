@@ -8,10 +8,11 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Input;
-
 use Illuminate\Notifications\Notifiable;
 use App\Notifications\UnDoneToDo;
+
+
+
 
 class TodoController extends Controller
 {
@@ -32,8 +33,8 @@ class TodoController extends Controller
         //return view('todo.list',['todoList' => $todoList] );
     }
 
-    public function show($id){
-
+    public function show($id)
+    {
         $todoList = Todo::where('list_id', $id)->orderBy('created_at','desc')->get();
         return response()->json([['todoList'=>$todoList],['list_id'=>$id]]);
 

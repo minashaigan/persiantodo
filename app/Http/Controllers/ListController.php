@@ -7,6 +7,7 @@ use App\Todo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Redis;
 
 class ListController extends Controller
 {
@@ -93,15 +94,32 @@ class ListController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      */
     
-    public function show($id){
+    public function show($id)
+    {
+        $storage = Redis::Connection();
+        if( $storage->zScore('listViews','list:' . $id) ) {
+            $storage->pipeline(function ($pipe) use ($id)
+            {
+                // want to have lots of increment of views
+                $pipe->zIncrBy('listViews', 1, 'list:' . $id);// name of this list of views as key,increment number,keys
+                $pipe->incr('list:' .$id. ':views');
+            });
+        }
+        else{
+            //increment new value
+            $views = $storage->incr('list:' .$id. ':views'); // return how many time this view , views
+            $storage->zIncrBy('listViews', $views, 'list:' . $id);
+        }
+        $views = $storage->get('list:' .$id. ':views');
 
+        //return "This a list with id : " . $id ." it has " . $views . " views";
         $List = Listt::findOrFail($id);
-        return response()->json(['List'=>$List]);
-//        $todoList = Todo::where('list_id', $id)->orderBy('created_at','desc')->get();
-//
-//        //return $lists[0]->user;
-//
-//        return view('todo.list',[['todoList' => $todoList],['list_id' => $id]]);
+        return response()->json([['todoList' => $List],['list_id' => $id]]);
+        //$todoList = Todo::where('list_id', $id)->orderBy('created_at','desc')->get();
+        //return $List;
+        //return $todoList[0]->user;
+        
+        return view('todo.list',[['todoList' => $List],['list_id' => $id]]);
 //        //return view('to do.list', compact('List'));
     }
 
