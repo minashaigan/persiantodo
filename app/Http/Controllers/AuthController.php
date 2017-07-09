@@ -16,8 +16,7 @@ class AuthController extends Controller
     public function home()
     {
         $storage = Redis::Connection();
-        $popular = $storage->zRevRange('listViews', 0, 0);
-
+        $popular = $storage->zRevRange('listViews', 0, -1);
         foreach ($popular as $value){
             $id = str_replace('list:', '', $value);
             return app('App\Http\Controllers\ListController')->show($id);

@@ -36,11 +36,11 @@ class TodoController extends Controller
     public function show($id)
     {
         $todoList = Todo::where('list_id', $id)->orderBy('created_at','desc')->get();
-        return response()->json([['todoList'=>$todoList],['list_id'=>$id]]);
+        //return response()->json([['todoList'=>$todoList],['list_id'=>$id]]);
 
         ////return $lists[0]->user;
 
-        //return view('todo.list',['todoList' => $todoList,'list_id'=>$id]);
+        return view('todo.list',['todoList' => $todoList,'list_id'=>$id]);
 
     }
     

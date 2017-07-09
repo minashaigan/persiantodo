@@ -139,6 +139,7 @@ return [
 
         Illuminate\Notifications\NotificationServiceProvider::class,
         NotificationChannels\Telegram\TelegramServiceProvider::class,
+        Barryvdh\Debugbar\ServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -207,5 +208,6 @@ return [
         'Html' => 'Collective\Html\HtmlFacade',
 
     ],
+    'Debugbar' => Barryvdh\Debugbar\Facade::class,
 
 ];

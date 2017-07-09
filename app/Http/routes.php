@@ -5,7 +5,9 @@
 // Home Page
 Route::get('/home', 'AuthController@home');
 Route::get('/', 'AuthController@home');
-
+//Route::get('/', function (){
+//    return view('home');
+//});
 //Route::get('/',function(){
 //   print_r(app()->make('redis'));
 //});

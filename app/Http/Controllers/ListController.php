@@ -113,14 +113,16 @@ class ListController extends Controller
         $views = $storage->get('list:' .$id. ':views');
 
         //return "This a list with id : " . $id ." it has " . $views . " views";
+
         $List = Listt::findOrFail($id);
-        return response()->json([['todoList' => $List],['list_id' => $id]]);
+        $todoList = Todo::where('list_id', $id)->orderBy('created_at','desc')->get();
+        return response()->json([['List' => $List],['list_id' => $id],['todoList'=>$todoList]]);
         //$todoList = Todo::where('list_id', $id)->orderBy('created_at','desc')->get();
         //return $List;
         //return $todoList[0]->user;
-        
-        return view('todo.list',[['todoList' => $List],['list_id' => $id]]);
-//        //return view('to do.list', compact('List'));
+
+//        return view('todo.list',['todoList' => $todoList,'list_id' => $id]);
+        //return view('todo.list', compact('List'));
     }
 
     /**
