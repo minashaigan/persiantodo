@@ -30,6 +30,8 @@ class Listt extends Model
      */
     protected $fillable = [
         'name',
+        'description',
+        'icon',
         'user_id'
     ];
 

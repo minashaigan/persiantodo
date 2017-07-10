@@ -17,13 +17,18 @@ class AuthController extends Controller
     {
         $storage = Redis::Connection();
         $popular = $storage->zRevRange('listViews', 0, -1);
-        foreach ($popular as $value){
-            $id = str_replace('list:', '', $value);
-            return app('App\Http\Controllers\ListController')->show($id);
-            //echo "list " . $id . "is popular" . "<br>";
+        if($popular) {
+            foreach ($popular as $value) {
+                $id = str_replace('list:', '', $value);
+                return app('App\Http\Controllers\ListController')->show($id);
+                //echo "list " . $id . "is popular" . "<br>";
+            }
+        }//name of zIncrBy , index you want to start
+        else{
+            return view('home');
         }
-        //name of zIncrBy , index you want to start
-        //return view('home');
+
+
     }
 
     /**

@@ -21,7 +21,6 @@ class ListController extends Controller
 
         $Lists = Listt::where('user_id', Auth::user()->id )->orderBy('created_at','desc')->get();
         //$Lists = Listt::where('user_id', 1)->orderBy('created_at','desc')->get();
-
         return response()->json(['Lists' => $Lists]);
         //return view('list.list',['Lists' => $Lists]);
 
@@ -55,6 +54,7 @@ class ListController extends Controller
 
         Listt::create([
             'name'      => $request->get('name'),
+            
             'user_id' => Auth::user()->id,
         ]);
 

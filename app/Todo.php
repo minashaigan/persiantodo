@@ -28,7 +28,10 @@ class Todo extends Model
         'name',
         'context',
         'file',
-        'date',
+        'link',
+        'sticker_name',
+        'sticker_color',
+        'deadline',
         'rate',
         'list_id'
 ];

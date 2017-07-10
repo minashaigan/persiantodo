@@ -17,7 +17,9 @@ class CreateTodosTable extends Migration
             $table->string('name');
             $table->string('context')->nullable();
             $table->string('file')->nullable();
-            $table->dateTime('date')->nullable();
+            $table->string('link')->nullable();
+            $table->string('sticker_name')->nullable();
+            $table->integer('sticker_color')->nullable();
             $table->dateTime('deadline')->nullable();
             $table->double('rate', 15, 2)->default('0.0');
             $table->integer('list_id')->unsigned()->index();
