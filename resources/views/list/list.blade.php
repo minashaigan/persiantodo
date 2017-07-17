@@ -35,7 +35,7 @@
             </table>
         </div>
         <div class="text-center">
-            {!! $Lists->render() !!}
+{{--            {!! $Lists->render() !!}--}}
         </div>
     @else
         <div class="text-center">

@@ -25,7 +25,6 @@ Route::get('/logout', ['middleware' => 'auth', 'uses' => 'AuthController@logout'
 
 // Registration and User Profile
 Route::resource('user', 'UserController', ['except' => ['index', 'show', 'destroy']]);
-
 // List Resources
 Route::resource('list', 'ListController', ['middleware' => 'auth']);
 Route::get('list/edit/{id}','ListController@edit');

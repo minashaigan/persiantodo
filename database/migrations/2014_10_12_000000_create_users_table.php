@@ -19,7 +19,9 @@ class CreateUsersTable extends Migration
             $table->boolean('reminder');
             $table->string('telegram_user_id');
             $table->string('password', 60);
-            $table->rememberToken();
+            $table->string('api_token')->nullable();
+            $table->string('remember_token')->nullable();
+            
             $table->timestamps();
         });
     }
